@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couitchy's portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent: #2196F3;
+            --accent-hover: #1976D2;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #242424;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent: #64B5F6;
+            --accent-hover: #42A5F5;
+            --border: #404040;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            box-shadow: 0 2px 4px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        h1 {
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .about-section {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            white-space: pre-line;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            border: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .skills {
+            max-width: 800px;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .category-btn:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .category-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .project-year {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .project-media {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            align-items: stretch;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .media-item {
+            height: 200px;
+            background-color: var(--bg-secondary);
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .media-item img,
+        .media-item video,
+        .media-item iframe {
+            height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            background-color: var(--bg-secondary);
+            border: none;
+        }
+
+        .media-item iframe {
+            aspect-ratio: 16/9;
+            width: auto;
+            pointer-events: none;
+        }
+
+        .media-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .modal-content.youtube-modal {
+            aspect-ratio: 16/9;
+            width: 90%;
+            max-width: 1200px;
+            height: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+            z-index: 1001;
+        }
+
+        .modal-nav:hover {
+            color: var(--accent);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .contact-section {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .contact-section h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-link {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+            @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .project-media {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .media-item {
+                height: 150px;
+                max-width: 100%;
+            }
+
+            .media-item img,
+            .media-item video {
+                max-width: 100%;
+                width: auto;
+            }
+
+            .modal-nav {
+                font-size: 30px;
+                padding: 10px;
+            }
+
+            .modal-close {
+                right: 20px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 id="site-title">— Couitchy's portfolio —</h1>
+            <div class="controls">
+                <button class="toggle-btn" id="theme-toggle">🌙 Dark mode</button>
+                <button class="toggle-btn" id="lang-toggle">FR</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-content">
+                <div class="profile-image"><img src="media/me.jpg" style="width:100%; height:100%; border-radius:50%; object-fit:cover;"></div>
+                <div class="about-text">
+                    <h2 id="about-title">About me</h2>
+                    <p id="about-description">Experienced .NET WinForms developer with an extensive background in electronics and embedded systems, I have completed numerous projects spanning computer science, electronics, and maths.<br>As a Signal Processing teacher, I combine theoretical knowledge with practical application, creating innovative solutions that bridge software development and hardware engineering.</p>
+                    <div class="skills">
+                        <span class="skill-tag">.NET / WinForms</span>
+                        <span class="skill-tag">Android Development</span>
+                        <span class="skill-tag">Embedded Systems</span>
+                        <span class="skill-tag">Home Automation</span>
+                        <span class="skill-tag">Electronics</span>
+                        <span class="skill-tag">Signal Processing</span>
+                        <span class="skill-tag">RF propagation</span>
+                        <span class="skill-tag">PCB Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <div class="categories">
+            <button class="category-btn active" data-category="all" id="cat-all">
+                All Projects
+            </button>
+            <button class="category-btn" data-category="programming" id="cat-programming">
+                Programming
+            </button>
+            <button class="category-btn" data-category="electronics" id="cat-electronics">
+                Electronics / DIY
+            </button>
+            <button class="category-btn" data-category="teaching" id="cat-teaching">
+                Teaching
+            </button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projects-container"></div>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2 id="contact-title">Get in touch</h2>
+            <p class="contact-info" id="contact-text">
+                Interested in my work or want to collaborate?<br>
+                Feel free to reach out: <a href="mailto:couitchy@free.fr" class="contact-link">couitchy@free.fr</a>
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <p id="footer-text">© 2025 Couitchy Corp. — All rights reserved</p>
+    </footer>
+
+    <!-- Fullscreen Modal -->
+    <div class="modal" id="mediaModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <span class="modal-nav modal-prev" id="modalPrev">&#10094;</span>
+        <span class="modal-nav modal-next" id="modalNext">&#10095;</span>
+        <img class="modal-content" id="modalImage" style="display:none;">
+        <video class="modal-content" id="modalVideo" controls style="display:none;"></video>
+        <iframe class="modal-content youtube-modal" id="modalYoutube" style="display:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                siteTitle: "— Couitchy's portfolio —",
+                aboutTitle: "About me",
+                aboutDescription: "Experienced .NET WinForms developer with an extensive background in electronics and embedded systems, I have completed numerous projects spanning computer science, electronics, and maths.\r\nAs a Signal Processing teacher, I combine theoretical knowledge with practical application, creating innovative solutions that bridge software development and hardware engineering.",
+                catAll: "All projects",
+                catProgramming: "Programming",
+                catElectronics: "Electronics / DIY",
+                catTeaching: "Teaching",
+                contactTitle: "Get in touch",
+                contactText: "Interested in my work or want to collaborate?<br>Feel free to reach out:",
+                footerText: "© 2025 Couitchy Corp. — All rights reserved",
+                darkMode: "🌙 Dark mode",
+                lightMode: "☀️ Light mode"
+            },
+            fr: {
+                siteTitle: "— Couitchy's portfolio —",
+                aboutTitle: "À propos",
+                aboutDescription: "Développeur .NET WinForms expérimenté avec une vaste expertise en électronique et systèmes embarqués, j'ai réalisé de nombreux projets couvrant l'informatique, l'électronique et les mathématiques.\r\nEn tant qu'enseignant en Traitement du Signal, je combine connaissances théoriques et applications pratiques, créant des solutions innovantes qui relient le développement logiciel et l'ingénierie matérielle.",
+                catAll: "Tous les projets",
+                catProgramming: "Programmation",
+                catElectronics: "Électronique / Bricolage",
+                catTeaching: "Enseignement",
+                contactTitle: "Me contacter",
+                contactText: "Intéressé par mon travail ou envie de collaborer ?<br>N'hésitez pas à me contacter :",
+                footerText: "© 2025 Couitchy Corp. — Tous droits réservés",
+                darkMode: "🌙 Mode sombre",
+                lightMode: "☀️ Mode clair"
+            }
+        };
+
+        const projects = {
+            programming: [
+                {
+                    year: 2025,
+                    title: "HiHealth",
+                    description: {
+                        en: "A comprehensive health data management application designed to collect, analyze, and visualize fitness metrics from Huawei Honor Band devices. Features include activity tracking, sleep analysis, and health trend monitoring.",
+                        fr: "Une application complète de gestion des données de santé conçue pour collecter, analyser et visualiser les métriques de fitness depuis les bracelets Huawei Honor Band. Inclut le suivi d'activité (marche et course à pied) et l'analyse du sommeil."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-hihealth-1.png'},
+                        {type: 'image', src: 'media/programming-hihealth-2.png'},
+                        {type: 'image', src: 'media/programming-hihealth-3.png'},
+                        {type: 'image', src: 'media/programming-hihealth-4.png'}
+                    ]
+                },
+                {
+                    year: 2021,
+                    title: "MATR",
+                    description: {
+                        en: "An innovative creative expression tool enabling real-time manipulation and transformation of visual objects. Ideal for live performances, digital art creation, and interactive installations.\r\nThis technology has been <a href='https://patents.google.com/patent/FR3151456A1/fr' target='_blank' class='contact-link'>patented</a> by <a href='https://www.scengrafics.com/' target='_blank' class='contact-link'>Scengrafics</a>.",
+                        fr: "Un instrument innovant d'expression créative permettant la manipulation et la transformation en temps réel d'objets visuels. Idéal pour les performances live, la création d'art numérique et les installations interactives.\r\nCette technologie a été <a href='https://patents.google.com/patent/FR3151456A1/fr' target='_blank' class='contact-link'>brevetée</a> par <a href='https://www.scengrafics.com/' target='_blank' class='contact-link'>Scengrafics</a>."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-matr-1.png'},
+                        {type: 'image', src: 'media/programming-matr-2.png'},
+                        {type: 'image', src: 'media/programming-matr-3.png'},
+                        {type: 'youtube', src: 'https://www.youtube-nocookie.com/embed/o93LuUL6TSM'},
+                        {type: 'youtube', src: 'https://www.youtube-nocookie.com/embed/6Cd4NwAmZD0'},
+                        {type: 'youtube', src: 'https://www.youtube-nocookie.com/embed/FW2nfCsqcKg'}
+                    ]
+                },
+                {
+                    year: 2016,
+                    title: "LAN, reborn",
+                    description: {
+                        en: "Technical preparation of rooms for LAN events, covering hardware installation, system configuration, network optimization, and delivery of a ready-to-use gaming environment.\r\nA list of the games played can be found <a href='/extras/lan-games' target='_blank' class='contact-link'>here</a>.",
+                        fr: "Préparation et configuration technique de salles pour accueillir des évènements LAN : installation du matériel, configuration des systèmes, optimisation du réseau et mise en place d'un environnement prêt à l'usage.\r\nRetrouvez <a href='/extras/lan-games' target='_blank' class='contact-link'>ici</a> la liste des jeux joués régulièrement."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-lan-1.jpg'},
+                        {type: 'image', src: 'media/programming-lan-2.jpg'},
+                        {type: 'image', src: 'media/programming-lan-3.jpg'},
+                        {type: 'video', src: 'media/programming-lan-4.mp4'}
+                    ]
+                },
+                {
+                    year: 2013,
+                    title: "BourseManager",
+                    description: {
+                        en: "A sophisticated portfolio management software featuring automated stock price downloads, technical analysis tools, charting capabilities, and analyst recommendation tracking to support informed investment decisions.",
+                        fr: "Un logiciel sophistiqué de gestion de portefeuille avec téléchargement automatique des cours, outils d'analyse technique, capacités graphiques et suivi des recommandations d'analystes pour éclairer les décisions d'investissement."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-boursemanager-1.png'},
+                        {type: 'image', src: 'media/programming-boursemanager-2.png'},
+                        {type: 'image', src: 'media/programming-boursemanager-3.png'},
+                        {type: 'image', src: 'media/programming-boursemanager-4.png'}
+                    ]
+                },
+                {
+                    year: 2009,
+                    title: "WiFi Coverage",
+                    description: {
+                        en: "A radio coverage measurement tool that captures RSSI (Received Signal Strength Indicator) data and generates color-scaled heat maps to visualize WiFi signal strength distribution across physical spaces.",
+                        fr: "Un outil de mesure de couverture radio qui capture les données RSSI (Received Signal Strength Indicator) et génère des cartes colorées pour visualiser la distribution de la force du signal WiFi dans les pièces."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-wificoverage-1.jpg'}
+                    ]
+                },
+                {
+                    year: 2007,
+                    title: "MTGM",
+                    description: {
+                        en: "A complete Magic The Gathering collection management system with features including price tracking, deck-building assistance with strategy recommendations, win/loss statistics, and proxy card printing.\r\nThere is a <a href='http://mtgm.free.fr' target='_blank' class='contact-link'>dedicated website</a> for this project as well as a <a href='https://github.com/couitchy/MTGM' target='_blank' class='contact-link'>GitHub</a>.\r\nMy card collection can be viewed <a href='/extras/magic-cards' target='_blank' class='contact-link'>here</a>.",
+                        fr: "Un système complet de gestion de collection Magic The Gathering avec suivi des prix, assistance à la construction de decks avec recommandations stratégiques, statistiques de victoires/défaites et impression de cartes proxy.\r\Il existe un <a href='http://mtgm.free.fr' target='_blank' class='contact-link'>site web dédié</a> à ce projet ainsi qu'un <a href='https://github.com/couitchy/MTGM' target='_blank' class='contact-link'>GitHub</a>.\r\nMa collection de cartes est visible <a href='/extras/magic-cards' target='_blank' class='contact-link'>ici</a>."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-mtgm-1.png'},
+                        {type: 'image', src: 'media/programming-mtgm-2.png'},
+                        {type: 'image', src: 'media/programming-mtgm-3.png'},
+                        {type: 'image', src: 'media/programming-mtgm-4.png'},
+                        {type: 'image', src: 'media/programming-mtgm-5.png'}
+                    ]
+                },
+                {
+                    year: 2006,
+                    title: "SyncMX",
+                    description: {
+                        en: "A privacy-focused file synchronization solution for maintaining consistent data across multiple drives and locations, completely cloud-free to ensure full data ownership and security.",
+                        fr: "Une solution de synchronisation de fichiers axée sur la confidentialité pour maintenir des données cohérentes sur plusieurs disques et emplacements, complètement sans cloud pour garantir une propriété et une sécurité totales des données."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/programming-syncmx-1.png'}
+                    ]
+                }
+            ],
+            electronics: [
+                {
+                    year: 2025,
+                    title: "Attic Show",
+                    description: {
+                        en: "A large-scale ambient lighting installation based on WLED framework to create synchronized, sound-reactive lighting effects across 150 square meters of attic space, perfect for immersive entertainment experiences.",
+                        fr: "Une installation d'éclairage ambiant à grande échelle utilisant le framework WLED pour créer des effets lumineux synchronisés et réactifs au son sur 150 mètres carrés de combles, parfaite pour des expériences de divertissement immersives."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-atticshow-1.jpg'},
+                        {type: 'video', src: 'media/electronics-atticshow-2.mp4'},
+                        {type: 'image', src: 'media/electronics-atticshow-3.jpg'}
+                    ]
+                },
+                {
+                    year: 2025,
+                    title: "Ambilight",
+                    description: {
+                        en: "A custom-designed PCB system to control RGBW LED strips behind furniture or TV screens, replicating Philips Ambilight technology to create an immersive viewing experience while reducing eye strain while watching movies or TV shows.",
+                        fr: "Un circuit imprimé personnalisé pour contrôler des bandes LED RGBW derrière les meubles ou les écrans TV, imitant la technologie Philips Ambilight pour créer une expérience immersive tout en réduisant la fatigue oculaire lors du visionnage de films ou de séries."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-ambilight-1.png'},
+                        {type: 'image', src: 'media/electronics-ambilight-2.jpg'},
+                        {type: 'image', src: 'media/electronics-ambilight-3.jpg'},
+                        {type: 'video', src: 'media/electronics-ambilight-4.mp4'}
+                    ]
+                },
+                {
+                    year: 2024,
+                    title: "Flame Wave",
+                    description: {
+                        en: "An artistic DIY project featuring 3D-printed circuit paths that create mesmerizing visual effects of fire waves traveling along predetermined routes.",
+                        fr: "Un projet de bricolage artistique présentant des circuits imprimés en 3D qui créent des effets visuels fascinants d'ondes de feu voyageant le long de trajets prédéterminés."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-flamewave-1.png'},
+                        {type: 'image', src: 'media/electronics-flamewave-2.png'},
+                        {type: 'video', src: 'media/electronics-flamewave-3.mp4'}
+                    ]
+                },
+                {
+                    year: 2024,
+                    title: "Smart Cube",
+                    description: {
+                        en: "An enhanced version of the iCubeSmart 3D8 software, providing improved control algorithms and expanded capabilities for 3D LED cube displays (8×8×8), supporting both monochrome and full-color RGB configurations.\r\nYou can find this project on <a href='https://github.com/couitchy/SmartCube' target='_blank' class='contact-link'>GitHub</a>.",
+                        fr: "Un logiciel de remplacement pour le iCubeSmart 3D8, offrant des algorithmes de contrôle améliorés et des capacités étendues pour les affichages sur cubes LED 3D (8×8×8), supportant les configurations monochromes et RGB.\r\nVous pouvez retrouver ce projet sur <a href='https://github.com/couitchy/SmartCube' target='_blank' class='contact-link'>GitHub</a>."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-smartcube-1.jpg'},
+                        {type: 'image', src: 'media/electronics-smartcube-2.jpg'},
+                        {type: 'image', src: 'media/electronics-smartcube-3.gif'}
+                    ]
+                },
+                {
+                    year: 2022,
+                    title: "Baby-foot",
+                    description: {
+                        en: "A vintage foosball table modernization project incorporating LED lighting effects and electronic goal detection sensors to better track scores, blending classic gameplay with modern technology.",
+                        fr: "Un projet de modernisation de baby-foot vintage incorporant des effets d'éclairage LED et des capteurs électroniques de détection de buts pour mieux suivre les scores, mêlant jeu rétro et technologie moderne."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-babyfoot-1.jpg'},
+                        {type: 'image', src: 'media/electronics-babyfoot-2.jpg'},
+                        {type: 'image', src: 'media/electronics-babyfoot-3.jpg'}
+                    ]
+                },
+                {
+                    year: 2021,
+                    title: "Hygrometer",
+                    description: {
+                        en: "A custom indoor weather station featuring soil moisture sensor and atmospheric humidity tracking, designed to help maintain optimal conditions for houseplants with real-time monitoring.",
+                        fr: "Une station météo d'intérieur personnalisée avec capteurs d'humidité de la terre et suivi de l'humidité atmosphérique, conçue pour maintenir des conditions optimales pour les plantes d'intérieur avec surveillance en temps réel."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-hygrometer-1.png'},
+                        {type: 'image', src: 'media/electronics-hygrometer-2.png'}
+                    ]
+                },
+                {
+                    year: 2020,
+                    title: "Smart Home",
+                    description: {
+                        en: "A comprehensive, privacy-first home automation framework built on Tasmota, OpenBeken, and Hue API technologies. Features a custom Android application for complete control of all smart home devices without relying on cloud services.",
+                        fr: "Un framework domotique complet axé sur la confidentialité construit sur les technologies Tasmota, OpenBeken et Hue API. Comprend une application Android personnalisée pour un contrôle complet de tous les appareils domotiques sans dépendre de services cloud."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-smarthome-1.jpg'},
+                        {type: 'image', src: 'media/electronics-smarthome-2.png'},
+                        {type: 'image', src: 'media/electronics-smarthome-3.png'},
+                        {type: 'image', src: 'media/electronics-smarthome-4.jpg'}
+                    ]
+                },
+                {
+                    year: 2020,
+                    title: "Zoetrope",
+                    description: {
+                        en: "A custom PCB design integrating precise motor control and LED ring timing to create stunning animation effects with 3D-printed sculptures, bringing static objects to life through the persistence of vision phenomenon.",
+                        fr: "Un circuit imprimé personnalisé intégrant le contrôle précis de la vitesse de rotation d'un moteur et d'un anneau LED stroboscopique pour créer des effets d'animation époustouflants avec des sculptures imprimées en 3D, donnant vie à des objets statiques grâce au phénomène de persistance rétinienne."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-zoetrope-1.png'},
+                        {type: 'image', src: 'media/electronics-zoetrope-2.png'},
+                        {type: 'video', src: 'media/electronics-zoetrope-3.mp4'},
+                        {type: 'image', src: 'media/electronics-zoetrope-4.gif'},
+                        {type: 'image', src: 'media/electronics-zoetrope-5.jpg'}
+                    ]
+                },
+                {
+                    year: 2010,
+                    title: "Bluetooth Train",
+                    description: {
+                        en: "A custom circuit board adding wireless Bluetooth connectivity to model electric trains, enabling full remote control including speed, direction, and rails switching through a companion Android application.",
+                        fr: "Un circuit imprimé personnalisé ajoutant une connectivité Bluetooth aux trains électriques miniatures, permettant un contrôle à distance complet incluant vitesse, direction et aiguillage via l'application Android associée."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-bluetoothtrain-1.png'},
+                        {type: 'image', src: 'media/electronics-bluetoothtrain-2.png'},
+                        {type: 'image', src: 'media/electronics-bluetoothtrain-3.jpg'},
+                        {type: 'video', src: 'media/electronics-bluetoothtrain-4.mp4'}
+                    ]
+                },
+                {
+                    year: 2008,
+                    title: "Antennas",
+                    description: {
+                        en: "A comprehensive RF analysis project documenting the performance characteristics, radiation patterns, and impedance measurements of various antenna types salvaged from consumer electronics and communications equipment.",
+                        fr: "Un projet d'analyse RF complet documentant les caractéristiques de performance, les diagrammes de rayonnement et les mesures d'impédance de divers types d'antennes récupérées d'appareils électroniques grand public et d'équipements de communication."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/electronics-antennas-1.png'},
+                        {type: 'video', src: 'media/electronics-antennas-2.mp4'},
+                        {type: 'image', src: 'media/electronics-antennas-3.png'},
+                        {type: 'image', src: 'media/electronics-antennas-4.jpg'},
+                        {type: 'video', src: 'media/electronics-antennas-5.mp4'}
+                    ]
+                }
+            ],
+            teaching: [
+                {
+                    year: 2021,
+                    title: "Fourier Drawing",
+                    description: {
+                        en: "An educational project visually demonstrating Fourier series decomposition of a 2x1D signal (which actually is the classroom mascot drawing), making abstract mathematical concepts tangible and engaging for students.\r\nAn interactive demo is available <a href='/extras/fourier-drawing' target='_blank' class='contact-link'>here</a>.",
+                        fr: "Un projet éducatif de visualisation de la décomposition en série de Fourier d'un signal 2x1D représentant la mascotte de la classe, rendant les concepts mathématiques abstraits tangibles et engageants pour les élèves.\r\nUne démo interactive est disponible <a href='/extras/fourier-drawing' target='_blank' class='contact-link'>ici</a>."
+                    },
+                    media: [
+                        {type: 'image', src: 'media/teaching-fourierdrawing-1.jpg'},
+                        {type: 'image', src: 'media/teaching-fourierdrawing-2.jpg'},
+                        {type: 'image', src: 'media/teaching-fourierdrawing-3.png'},
+                        {type: 'youtube', src: 'https://www.youtube-nocookie.com/embed/bptuAR0Jr6M'},
+                        {type: 'youtube', src: 'https://www.youtube-nocookie.com/embed/bG5ZZ7al9D8'}
+                    ]
+                }
+            ]
+        };
+
+        let currentLang = 'en';
+        let currentTheme = 'light';
+        let currentCategory = 'all';
+        let allMediaItems = [];
+        let currentMediaIndex = 0;
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('site-title').textContent = t.siteTitle;
+            document.getElementById('about-title').textContent = t.aboutTitle;
+            document.getElementById('about-description').textContent = t.aboutDescription;
+            document.getElementById('cat-all').textContent = t.catAll;
+            document.getElementById('cat-programming').textContent = t.catProgramming;
+            document.getElementById('cat-electronics').textContent = t.catElectronics;
+            document.getElementById('cat-teaching').textContent = t.catTeaching;
+            document.getElementById('contact-title').textContent = t.contactTitle;
+            document.getElementById('contact-text').innerHTML = t.contactText + '<br><a href="mailto:couitchy@free.fr" class="contact-link">couitchy@free.fr</a>';
+            document.getElementById('footer-text').textContent = t.footerText;
+            document.getElementById('theme-toggle').textContent = currentTheme === 'light' ? t.darkMode : t.lightMode;
+            document.getElementById('lang-toggle').textContent = currentLang === 'en' ? 'FR' : 'EN';
+            
+            renderProjects();
+        }
+
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '';
+            allMediaItems = [];
+
+            let projectsToShow = [];
+            if (currentCategory === 'all') {
+                projectsToShow = [
+                    ...projects.programming.map(p => ({...p, category: 'programming'})),
+                    ...projects.electronics.map(p => ({...p, category: 'electronics'})),
+                    ...projects.teaching.map(p => ({...p, category: 'teaching'}))
+                ].sort((a, b) => b.year - a.year);
+            } else {
+                projectsToShow = projects[currentCategory].map(p => ({...p, category: currentCategory}));
+            }
+
+            projectsToShow.forEach((project, projectIndex) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                
+                let mediaHTML = '';
+                if (project.media && project.media.length > 0) {
+                    mediaHTML = '<div class="project-media">';
+                    project.media.forEach((item, mediaIndex) => {
+                        const globalIndex = allMediaItems.length;
+                        allMediaItems.push(item);
+                        
+                        if (item.type === 'image') {
+                            mediaHTML += `
+                                <div class="media-item" data-index="${globalIndex}">
+                                    <img src="${item.src}" alt="${project.title}">
+                                </div>
+                            `;
+                        } else if (item.type === 'video') {
+                            mediaHTML += `
+                                <div class="media-item" data-index="${globalIndex}">
+                                    <video src="${item.src}" autoplay loop muted playsinline></video>
+                                </div>
+                            `;
+                        } else if (item.type === 'youtube') {
+                            mediaHTML += `
+                                <div class="media-item" data-index="${globalIndex}">
+                                    <iframe src="${item.src}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" frameborder="0"></iframe>
+                                </div>
+                            `;
+                        }
+                    });
+                    mediaHTML += '</div>';
+                } else {
+                    mediaHTML = '<div class="project-media"><div class="media-item"><div class="media-placeholder">Add your images/videos in the media array</div></div></div>';
+                }
+                
+                card.innerHTML = `
+                    <div class="project-year">${project.year}</div>
+                    <div class="project-title">${project.title}</div>
+                    <div class="project-description">${project.description[currentLang]}</div>
+                    ${mediaHTML}
+                `;
+                container.appendChild(card);
+            });
+
+            // Add click handlers for media items
+            document.querySelectorAll('.media-item[data-index]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    openModal(index);
+                });
+            });
+        }
+
+        function openModal(index) {
+            currentMediaIndex = index;
+            const modal = document.getElementById('mediaModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalVideo = document.getElementById('modalVideo');
+            const modalYoutube = document.getElementById('modalYoutube');
+            const item = allMediaItems[index];
+
+            // Hide all modal contents first
+            modalImg.style.display = 'none';
+            modalVideo.style.display = 'none';
+            modalVideo.pause();
+            modalYoutube.style.display = 'none';
+
+            if (item.type === 'image') {
+                modalImg.src = item.src;
+                modalImg.style.display = 'block';
+            } else if (item.type === 'video') {
+                modalVideo.src = item.src;
+                modalVideo.style.display = 'block';
+            } else if (item.type === 'youtube') {
+                modalYoutube.src = item.src;
+                modalYoutube.style.display = 'block';
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('mediaModal');
+            const modalVideo = document.getElementById('modalVideo');
+            const modalYoutube = document.getElementById('modalYoutube');
+            modal.classList.remove('active');
+            modalVideo.pause();
+            modalYoutube.src = ''; // Stop YouTube video
+        }
+
+        function navigateMedia(direction) {
+            if (allMediaItems.length === 0) return;
+            currentMediaIndex += direction;
+            if (currentMediaIndex < 0) currentMediaIndex = allMediaItems.length - 1;
+            if (currentMediaIndex >= allMediaItems.length) currentMediaIndex = 0;
+            openModal(currentMediaIndex);
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateLanguage();
+        });
+
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            updateLanguage();
+        });
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.getAttribute('data-category');
+                renderProjects();
+            });
+        });
+
+        // Modal controls
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('modalPrev').addEventListener('click', () => navigateMedia(-1));
+        document.getElementById('modalNext').addEventListener('click', () => navigateMedia(1));
+        
+        // Close modal on background click
+        document.getElementById('mediaModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('mediaModal');
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') closeModal();
+                if (e.key === 'ArrowLeft') navigateMedia(-1);
+                if (e.key === 'ArrowRight') navigateMedia(1);
+            }
+        });
+
+        // Portfolio initialization
+        renderProjects();
+    </script>
+</body>
+</html>
