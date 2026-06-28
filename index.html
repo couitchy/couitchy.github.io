@@ -102,6 +102,8 @@
             margin-bottom: 2rem;
             box-shadow: 0 2px 8px var(--shadow);
             white-space: pre-line;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .about-content {
@@ -127,6 +129,13 @@
         .about-text {
             flex: 1;
             min-width: 300px;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .about-text p {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .about-text h2 {
@@ -396,6 +405,15 @@
                 text-align: center;
             }
 
+            .about-text {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .skills {
+                display: none;
+            }
+
             .project-media {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -636,8 +654,8 @@
                     year: 2006,
                     title: "SyncMX",
                     description: {
-                        en: "A privacy-focused file synchronization solution for maintaining consistent data across multiple drives and locations, completely cloud-free to ensure full data ownership and security.",
-                        fr: "Une solution de synchronisation de fichiers axée sur la confidentialité pour maintenir des données cohérentes sur plusieurs disques et emplacements, complètement sans cloud pour garantir une propriété et une sécurité totales des données."
+                        en: "A privacy-focused file synchronization solution for maintaining consistent data across multiple drives and locations, completely cloud-free to ensure full data ownership and security.\r\nYou can find this project on <a href='https://github.com/couitchy/SyncMX' target='_blank' class='contact-link'>GitHub</a>.",
+                        fr: "Une solution de synchronisation de fichiers axée sur la confidentialité pour maintenir des données cohérentes sur plusieurs disques et emplacements, complètement sans cloud pour garantir une propriété et une sécurité totales des données.\r\nVous pouvez retrouver ce projet sur <a href='https://github.com/couitchy/SyncMX' target='_blank' class='contact-link'>GitHub</a>."
                     },
                     media: [
                         {type: 'image', src: 'media/programming-syncmx-1.png'}
